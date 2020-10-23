@@ -19,7 +19,7 @@ defmodule EncodeAnything.MixProject do
 
   defp deps do
     [
-      {:jason, "~> 1.1.2"}
+      {:jason, "~> 1.1"}
     ]
   end
 end
