@@ -1,0 +1,38 @@
+name: Test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        elixir:
+          - 1.15-slim
+    container:
+      image: elixir:${{ matrix.elixir }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: deps
+      env:
+        MIX_ENV: test
+      run: |
+        mix local.rebar --force
+        mix local.hex --force
+        mix deps.get
+    - name: tests
+      run: mix test
+
+  format:
+    runs-on: ubuntu-latest
+    container:
+      image: elixir:1.15-slim
+    steps:
+    - uses: actions/checkout@v2
+    - name: deps
+      run: |
+        mix local.rebar --force
+        mix local.hex --force
+        mix deps.get
+    - name: format
+      run: mix format --check-formatted --dry-run
