@@ -4,7 +4,7 @@ defmodule EncodeAnything.MixProject do
   def project do
     [
       app: :encode_anything,
-      version: "0.1.0",
+      version: "0.2.0",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
       deps: deps()
@@ -19,7 +19,8 @@ defmodule EncodeAnything.MixProject do
 
   defp deps do
     [
-      {:jason, "~> 1.1"}
+      {:jason, "~> 1.1"},
+      {:stream_data, "~> 0.5", only: [:dev, :test]}
     ]
   end
 end

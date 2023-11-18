@@ -83,7 +83,11 @@ defmodule EncodeAnything.Encode do
   end
 
   def value(value, escape, _encode_map) when is_binary(value) do
-    encode_string(value, escape)
+    if String.valid?(value) do
+      encode_string(value, escape)
+    else
+      value |> Base.encode64() |> encode_string(escape)
+    end
   end
 
   def value(value, _escape, _encode_map) when is_integer(value) do
@@ -271,6 +275,8 @@ defmodule EncodeAnything.Encode do
   @doc false
   # This is used in the helpers and deriving implementation
   def key(string, escape) when is_binary(string) do
+    string = if String.valid?(string), do: string, else: Base.encode64(string)
+
     escape.(string, string, 0)
   end
 
@@ -280,7 +286,7 @@ defmodule EncodeAnything.Encode do
   end
 
   def key(other, escape) do
-    string = String.Chars.to_string(other)
+    string = inspect(other)
     escape.(string, string, 0)
   end
 
