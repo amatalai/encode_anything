@@ -286,8 +286,12 @@ defmodule EncodeAnything.Encode do
   end
 
   def key(other, escape) do
-    string = inspect(other)
+    string = String.Chars.to_string(other)
     escape.(string, string, 0)
+  rescue
+    _e ->
+      string = inspect(other)
+      escape.(string, string, 0)
   end
 
   @spec string(String.t(), opts) :: iodata
