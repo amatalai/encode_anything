@@ -303,7 +303,7 @@ defmodule EncodeAnything.Encode do
     [?\", escape.(string, string, 0), ?\"]
   end
 
-  slash_escapes = Enum.zip(~c"\b\t\n\f\r\\\"\\", ~c"btnfr\"\\")
+  slash_escapes = Enum.zip(~c"\b\t\n\f\r\"\\", ~c"btnfr\"\\")
   surogate_escapes = Enum.zip([0x2028, 0x2029], ["\\u2028", "\\u2029"])
   ranges = [{0x00..0x1F, :unicode} | slash_escapes]
   html_ranges = [{0x00..0x1F, :unicode}, {?/, ?/} | slash_escapes]
